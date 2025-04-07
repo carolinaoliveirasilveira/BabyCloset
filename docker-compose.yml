@@ -1,0 +1,37 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: babycloset-postgres
+    environment:
+      POSTGRES_DB: wardrobe_db
+      POSTGRES_USER: baby
+      POSTGRES_PASSWORD: closet
+    ports:
+      - "5432:5432"
+    networks:
+      - babycloset-net
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    networks:
+      - babycloset-net
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - babycloset-net
+
+networks:
+  babycloset-net:
+    driver: bridge
