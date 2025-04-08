@@ -1,2 +1,3 @@
 rootProject.name = 'BabyCloset'
 include 'services:wardrobe-service'
+include 'services:layette-service'
