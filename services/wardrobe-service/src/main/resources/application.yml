@@ -6,9 +6,19 @@ spring:
     url: jdbc:postgresql://localhost:5432/wardrobe_db
     username: baby
     password: closet
+
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: kafka:9092
+    consumer:
+      group-id: wardrobe-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer

@@ -46,7 +46,32 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - babycloset-net
+
+  wardrobe-service:
+    build:
+      context: ./services/wardrobe-service
+    container_name: wardrobe-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - wardrobe-db
+      - kafka
+    networks:
+      - babycloset-net
+
+  layette-service:
+    build:
+      context: ./services/layette-service
+    container_name: layette-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - layette-db
+      - kafka
     networks:
       - babycloset-net
 
