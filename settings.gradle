@@ -1,0 +1,5 @@
+rootProject.name = 'babycloset'
+
+include 'wardrobe-service'
+include 'layette-service'
+include 'exchange-service'
