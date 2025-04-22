@@ -1,17 +1,45 @@
 version: '3.8'
 
 services:
-  postgres:
+  postgres-wardrobe:
     image: postgres:15
-    container_name: babycloset-postgres
+    container_name: postgres-wardrobe
     environment:
-      POSTGRES_DB: babycloset
+      POSTGRES_DB: wardrobe_db
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - wardrobe_pgdata:/var/lib/postgresql/data
+    networks:
+      - babycloset-network
+
+  postgres-layette:
+    image: postgres:15
+    container_name: postgres-layette
+    environment:
+      POSTGRES_DB: layette_db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5434:5432"
+    volumes:
+      - layette_pgdata:/var/lib/postgresql/data
+    networks:
+      - babycloset-network
+
+  postgres-exchange:
+    image: postgres:15
+    container_name: postgres-exchange
+    environment:
+      POSTGRES_DB: exchange_db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5435:5432"
+    volumes:
+      - exchange_pgdata:/var/lib/postgresql/data
     networks:
       - babycloset-network
 
@@ -37,9 +65,41 @@ services:
     networks:
       - babycloset-network
 
+  wardrobe-service:
+    build: ./wardrobe-service
+    ports:
+      - "8081:8080"
+    depends_on:
+      - postgres-wardrobe
+      - kafka
+    networks:
+      - babycloset-network
+
+  layette-service:
+    build: ./layette-service
+    ports:
+      - "8082:8080"
+    depends_on:
+      - postgres-layette
+      - kafka
+    networks:
+      - babycloset-network
+
+  exchange-service:
+    build: ./exchange-service
+    ports:
+      - "8083:8080"
+    depends_on:
+      - postgres-exchange
+      - kafka
+    networks:
+      - babycloset-network
+
 networks:
   babycloset-network:
     driver: bridge
 
 volumes:
-  pgdata:
+  wardrobe_pgdata:
+  layette_pgdata:
+  exchange_pgdata:

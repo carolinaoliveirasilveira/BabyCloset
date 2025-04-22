@@ -1,12 +1,12 @@
 server:
-  port: 0
+  port: 8080
 
 spring:
   application:
     name: layette-service
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/babycloset
+    url: jdbc:postgresql://postgres-layette:5432/layette_db
     username: admin
     password: admin
     driver-class-name: org.postgresql.Driver
@@ -20,7 +20,7 @@ spring:
         format_sql: true
 
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: kafka:9092
 
 logging:
   level:
