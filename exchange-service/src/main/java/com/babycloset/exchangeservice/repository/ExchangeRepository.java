@@ -1,4 +1,7 @@
 package com.babycloset.exchangeservice.repository;
 
-public interface ExchangeRepository {
+import com.babycloset.exchangeservice.entity.Exchange;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ExchangeRepository extends JpaRepository<Exchange, Long> {
 }

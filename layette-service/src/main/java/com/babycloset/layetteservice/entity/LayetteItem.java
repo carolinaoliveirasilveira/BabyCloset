@@ -1,7 +1,10 @@
-package com.babycloset.layetteservice.enums;
+package com.babycloset.layetteservice.entity;
 
+import com.babycloset.layetteservice.enums.LayetteStatus;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "layette_items")
@@ -21,4 +24,6 @@ public class LayetteItem {
 
     @Enumerated(EnumType.STRING)
     private LayetteStatus status;
+    private LocalDate addedAt;
+
 }

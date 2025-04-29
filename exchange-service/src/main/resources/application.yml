@@ -1,12 +1,12 @@
 server:
-  port: 8080
+  port: 8083
 
 spring:
   application:
     name: exchange-service
 
   datasource:
-    url: jdbc:postgresql://postgres-exchange:5432/exchange_db
+    url: jdbc:postgresql://localhost:5435/exchange_db
     username: admin
     password: admin
     driver-class-name: org.postgresql.Driver
@@ -20,7 +20,13 @@ spring:
         format_sql: true
 
   kafka:
-    bootstrap-servers: kafka:9092
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: exchange-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: '*'
 
 logging:
   level:

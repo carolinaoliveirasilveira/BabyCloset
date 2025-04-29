@@ -43,55 +43,35 @@ services:
     networks:
       - babycloset-network
 
-  zookeeper:
-    image: confluentinc/cp-zookeeper:7.5.1
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
-    networks:
-      - babycloset-network
-
-  kafka:
-    image: confluentinc/cp-kafka:7.5.1
-    depends_on:
-      - zookeeper
+  redpanda:
+    image: docker.redpanda.com/redpandadata/redpanda:v23.3.10
+    container_name: redpanda
+    command:
+      - redpanda
+      - start
+      - --overprovisioned
+      - --smp 1
+      - --memory 512M
+      - --reserve-memory 0M
+      - --node-id 0
+      - --check=false
+      - --kafka-addr PLAINTEXT://0.0.0.0:9092
+      - --advertise-kafka-addr PLAINTEXT://redpanda:9092
     ports:
       - "9092:9092"
+      - "9644:9644"
+    networks:
+      - babycloset-network
+
+  redpanda-console:
+    image: docker.redpanda.com/redpandadata/console:latest
+    container_name: redpanda-console
+    ports:
+      - "8088:8080"
     environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-    networks:
-      - babycloset-network
-
-  wardrobe-service:
-    build: ./wardrobe-service
-    ports:
-      - "8081:8080"
+      - KAFKA_BROKERS=redpanda:9092
     depends_on:
-      - postgres-wardrobe
-      - kafka
-    networks:
-      - babycloset-network
-
-  layette-service:
-    build: ./layette-service
-    ports:
-      - "8082:8080"
-    depends_on:
-      - postgres-layette
-      - kafka
-    networks:
-      - babycloset-network
-
-  exchange-service:
-    build: ./exchange-service
-    ports:
-      - "8083:8080"
-    depends_on:
-      - postgres-exchange
-      - kafka
+      - redpanda
     networks:
       - babycloset-network
 

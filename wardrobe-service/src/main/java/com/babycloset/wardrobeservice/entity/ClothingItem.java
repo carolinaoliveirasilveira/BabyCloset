@@ -1,5 +1,6 @@
 package com.babycloset.wardrobeservice.entity;
 
+import com.babycloset.wardrobeservice.enums.Category;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,7 +20,9 @@ public class ClothingItem {
 
     private String description;
     private String size;
-    private String category; // exemplo: body, calça, vestido
+
+    @Enumerated(EnumType.STRING)
+    private Category category;
     private String season; // verão, inverno etc.
     private boolean available;
     private LocalDate addedAt;
