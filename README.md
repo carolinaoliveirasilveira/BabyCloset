@@ -107,5 +107,4 @@ babycloset/
 Back-end Developer • Apaixonada por arquitetura de microsserviços
 
 - 💼 [LinkedIn](https://www.linkedin.com/in/carolinaoliveirasilveira/)
-- 💻 [GitHub](https://github.com/carolinaoliveirasilveira)
 - 📧 carolinaoliveirasilveira@outlook.com
