@@ -28,7 +28,8 @@ public class Exchange {
     private String ownerEmail;
     private ExchangeStatus status;
 
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm", timezone = "America/Sao_Paulo")
     private LocalDateTime createdAt;
+
 
 }

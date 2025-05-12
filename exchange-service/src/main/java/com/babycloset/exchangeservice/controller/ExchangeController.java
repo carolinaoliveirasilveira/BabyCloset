@@ -2,7 +2,6 @@ package com.babycloset.exchangeservice.controller;
 
 import com.babycloset.exchangeservice.dto.ExchangeRequestDTO;
 import com.babycloset.exchangeservice.dto.ExchangeResponseDTO;
-import com.babycloset.exchangeservice.entity.Exchange;
 import com.babycloset.exchangeservice.service.ExchangeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

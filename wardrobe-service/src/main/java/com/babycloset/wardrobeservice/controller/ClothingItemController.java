@@ -49,4 +49,10 @@ public class ClothingItemController {
     public ResponseEntity<List<ClothingItemResponseDTO>> getByCategory(@PathVariable Category category) {
         return ResponseEntity.ok(service.findByCategory(category));
     }
+
+    @GetMapping("/categories")
+    public ResponseEntity<Category[]> getCategories() {
+        return ResponseEntity.ok(Category.values());
+    }
+
 }

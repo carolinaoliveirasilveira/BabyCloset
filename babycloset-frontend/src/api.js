@@ -1,14 +1,12 @@
 import axios from 'axios';
 
-// Cria instâncias separadas para cada serviço, conforme as URLs definidas.
-export const wardrobeApi = axios.create({
-  baseURL: 'http://localhost:8081/api/wardrobe',
-});
+const API = {
+  getWardrobeItems: () => axios.get('http://localhost:8081/api/wardrobe'),
+  getItemsByCategory: (category) => axios.get(`http://localhost:8081/api/wardrobe/category/${category}`),
+  getCategories: () => axios.get('http://localhost:8081/api/wardrobe/categories'),
+  getLayetteItems: () => axios.get('http://localhost:8082/api/layette'),
+  getExchangeItems: () => axios.get('http://localhost:8083/api/exchange')
+};
 
-export const layetteApi = axios.create({
-  baseURL: 'http://localhost:8082/api/layette',
-});
+export default API;
 
-export const exchangeApi = axios.create({
-  baseURL: 'http://localhost:8083/api/exchange',
-});
